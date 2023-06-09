@@ -9,7 +9,7 @@ const defaultQR = async (data = 'No Data', options = {}) => {
         secondaryColor: '#ffffff',
         margin: 1
     }
-    return await createQR(data, {...defaultOptions, ...options}, true)
+    return await createQR(data, {...defaultOptions, ...options, secondaryColor: options.secondaryColor === 'transparent' ? '#0000': options.secondaryColor}, true)
 }
 
 module.exports = defaultQR

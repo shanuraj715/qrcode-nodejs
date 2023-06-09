@@ -2,24 +2,35 @@ const { createCanvas } = require('canvas');
 const fs = require('fs');
 const utils = require('../../utils')
 
-const circularDots = async (qrCodeArray, dotRadius) => {
-  const dotSize = dotRadius * 2;
+const circularDots = async (qrCodeArray, options) => {
+  const defaultOptions = {
+    errorCorrectionLevel: 1,
+    width: 200,
+    primaryColor: '#000000',
+    secondaryColor: '#ffffff',
+    margin: 1,
+    ...options
+}
+  console.log(defaultOptions)
+  const oneRowMaxDots = qrCodeArray.length
+  const dotSize = defaultOptions.width / (oneRowMaxDots + (defaultOptions.margin * 2));
   const qrCodeSize = qrCodeArray.length;
-  const canvasSize = qrCodeSize * dotSize + 20;
+  const margin = dotSize * defaultOptions.margin
+  const canvasSize = qrCodeSize * dotSize + (margin * 2);
 
   // Create a new canvas
   const canvas = createCanvas(canvasSize, canvasSize);
   const ctx = canvas.getContext('2d');
 
-  ctx.fillStyle = '#22a6b3';
+  ctx.fillStyle = defaultOptions.secondaryColor;
   ctx.fillRect(0, 0, canvasSize, canvasSize);
 
   for (let i = 0; i < qrCodeSize; i++) {
         for (let j = 0; j < qrCodeSize; j++) {
-          const dotColor = qrCodeArray[i][j] === 1 ? 'white' : '#22a6b3';
+          const dotColor = qrCodeArray[i][j] === 1 ? defaultOptions.primaryColor : defaultOptions.secondaryColor;
           ctx.fillStyle = dotColor;
           ctx.beginPath();
-          ctx.arc((j + 0.5) * dotSize + 10, (i + 0.5) * dotSize + 10, dotRadius, 0, Math.PI * 2);
+          ctx.arc((j + 0.5) * dotSize + margin, (i + 0.5) * dotSize + margin, dotSize / 2, 0, Math.PI * 2);
           ctx.fill();
         }
     }

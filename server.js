@@ -1,5 +1,6 @@
 require('./globals')
 require('./exceptionHandler/handler')
+require('./onStart/index')
 const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path');
@@ -16,5 +17,5 @@ app.use(createQrRoute)
 
 global.serverListner = app.listen(8000, () => {
     console.log("Server is Online at port " + 8000 );
-  });
+});
 

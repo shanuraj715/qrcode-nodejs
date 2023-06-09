@@ -31,7 +31,6 @@ const deleteImage = async (filename, isPath) => {
     }
     try {
         await fs.promises.unlink(filePath);
-        console.log('File deleted successfully');
       } catch (err) {
         console.error(`Failed to delete the file: ${err}`);
       }

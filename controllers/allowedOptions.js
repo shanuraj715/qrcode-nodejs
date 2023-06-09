@@ -5,6 +5,7 @@ const allowedOptions = [
     'data',
     'primaryColor',
     'secondaryColor',
+    'margin'
 ]
 
 module.exports = allowedOptions

@@ -18,26 +18,30 @@ router.post('/create/:type', async (req, res) => {
             filteredOptions[item] = options[item]
         }
     })
-    console.log(filteredOptions)
-    switch(type){
-        case 'default': {
-            const img = await templates.defaultQR(filteredOptions.data, filteredOptions)
-            res.status(201).json(successResponse(201, {
-                url: utils.getImageHttpPath(img.split('/').at(-1))
-            }))
-            break
+    try{
+        switch(type){
+            case 'default': {
+                const img = await templates.defaultQR(filteredOptions.data, filteredOptions)
+                res.status(201).json(successResponse(201, {
+                    url: utils.getImageHttpPath(img.split('/').at(-1))
+                }))
+                break
+            }
+            case 'circular': {
+                const img = await createQR(filteredOptions.data, {filteredOptions, primaryColor: '#000000', secondaryColor: '#ffffff'}, false)
+                const array = await qrToArray(img, 2)
+                const filePath = await templates.circular(array, filteredOptions)
+                await utils.deleteImage(img, true)
+                res.status(201).json(successResponse(201, {
+                    url: utils.getImageHttpPath(filePath.split('/').at(-1))
+                }))
+                break
+            }
         }
-        case 'circular': {
-            const img = await createQR("Shanu Raj Is A Good Boy.", {})
-            const array = await qrToArray(img, 2)
-            console.log(img)
-            templates.circular(req, array, 16, './qr_code.png')
-            const filePath = await utils.deleteImage(img, true)
-            res.status(201).json(successResponse(201, {
-                url: utils.getImageHttpPath(filePath)
-            }))
-            break
-        }
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json(failResponse(500, ['Server is facing some issue.']))
     }
 })
 
