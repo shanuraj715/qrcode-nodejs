@@ -7,6 +7,7 @@ const path = require('path');
 const app = express()
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/image', express.static(path.join(__dirname, TEMP_QR_IMAGE_STORAGE_PATH)));
 
 // ROUTES

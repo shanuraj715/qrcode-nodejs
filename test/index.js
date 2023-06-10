@@ -1,4 +1,4 @@
-const edgeRounded = require('../qr/templates/edgeRounded')
+const downloadImage = require('../controllers/downloadImage')
 const createQR = require('../controllers/qrImageGenerator')
 const qrToArray = require('../controllers/qrToArray')
 const drawQRCode = require('../qr/qrImageCreator')
@@ -11,15 +11,7 @@ const deleteTempDir = require('./deleteAllTempFiles')
 
 const testFunction = async () => {
     deleteTempDir()
-    const img = await createQR("https://shanuthewebdev.in", {primaryColor: '#000000', secondaryColor: '#ffffff', errorCorrectionLevel: 3}, false)
-    const array = await qrToArray(img, 2)
-    const path = await edgeRounded(array, {
-        errorCorrectionLevel: 1,
-        width: 750,
-        primaryColor: '#000000',
-        secondaryColor: '#ffffff',
-        margin: 1
-    })
+    // await downloadImage('https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg')
 }
 
 module.exports = testFunction

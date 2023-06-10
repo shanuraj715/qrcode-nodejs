@@ -22,7 +22,7 @@ const deleteFilesInDirectory = () => {
             if (unlinkError) {
               console.error('Error deleting file:', unlinkError);
             } else {
-              console.log('File deleted successfully:', filePath);
+              // console.log('File deleted successfully:', filePath);
             }
           });
         }
