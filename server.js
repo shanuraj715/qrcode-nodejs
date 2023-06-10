@@ -12,10 +12,15 @@ app.use('/image', express.static(path.join(__dirname, TEMP_QR_IMAGE_STORAGE_PATH
 // ROUTES
 const createQrRoute = require('./routes/createQr/create')
 
+const test = require('./test')
+
 app.use(createQrRoute)
+
+// test()
 
 
 global.serverListner = app.listen(8000, () => {
     console.log("Server is Online at port " + 8000 );
 });
+
 
