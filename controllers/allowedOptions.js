@@ -5,7 +5,9 @@ const allowedOptions = [
     'data',
     'primaryColor',
     'secondaryColor',
-    'margin'
+    'margin',
+    'logoSize',
+    'errorCorrectionLevel'
 ]
 
 module.exports = allowedOptions

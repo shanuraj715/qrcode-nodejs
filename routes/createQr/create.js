@@ -11,7 +11,12 @@ const utils = require('../../utils')
 
 const defaultQR = require('./defaultQR')
 
-router.post('/create/:type', async (req, res) => {
+const handler = require('../../controllers/saveImageFromReq')
+
+const resize = require('../../controllers/resizeLogoToSquare')
+const addLogoToQR = require('../../controllers/addLogoToQR')
+
+router.post('/create/:type', handler, async (req, res) => {
     const {type} = req.params
     const options = req.body
     const filteredOptions = {}
@@ -20,15 +25,18 @@ router.post('/create/:type', async (req, res) => {
             filteredOptions[item] = options[item]
         }
     })
+    if(req.file){
+        filteredOptions.errorCorrectionLevel = 4
+    }
     if(type === 'default'){
-        await defaultQR(res, filteredOptions)
+        await defaultQR(req, res, filteredOptions)
         return // no need to execute below code
     }
 
     try{
-        const img = await createQR(filteredOptions.data, {filteredOptions, primaryColor: '#000000', secondaryColor: '#ffffff'}, false)
+        let img = await createQR(filteredOptions.data, {...filteredOptions, primaryColor: '#000000', secondaryColor: '#ffffff'}, false)
         const array = await qrToArray(img, 2)
-        await utils.deleteImage(img, true)
+        // await utils.deleteImage(img, true)
         let filePath = ''
         switch(type){
             case 'circular': {
@@ -40,13 +48,18 @@ router.post('/create/:type', async (req, res) => {
                 break
             }
         }
+        if(req.file){
+            const logoPath = req.file.path
+            const squareLogo = await resize(logoPath, filteredOptions.width, filteredOptions.logoSize)
+            filePath = await addLogoToQR(filePath, squareLogo)
+        }
+        await utils.deleteImage(img, true)
         res.status(201).json(successResponse(201, {
             url: utils.getImageHttpPath(filePath.split('/').at(-1))
         }))
         return
     }
     catch(err){
-        console.log(err)
         res.status(500).json(failResponse(500, ['Server is facing some issue.']))
         return
     }

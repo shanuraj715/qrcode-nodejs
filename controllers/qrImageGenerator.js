@@ -6,7 +6,7 @@ const qrOption = require('./getQrOption')
 
 const createQrImage = async (data = 'No Data', options = {}, isDefault = false) => {
     const defaultOptions = {
-        errorCorrectionLevel : 4,
+        errorCorrectionLevel : 2,
         scale : 1,
         margin : 0,
         primaryColor : "#000000",
@@ -14,7 +14,7 @@ const createQrImage = async (data = 'No Data', options = {}, isDefault = false) 
         width : 0,
         ...options
     }
-    
+
     const {errorCorrectionLevel, scale, margin, width } = defaultOptions
     const colors = {dark: defaultOptions.primaryColor, light: defaultOptions.secondaryColor}
 

@@ -20,6 +20,10 @@ const getImagePath = (filename) => {
     return `${TEMP_QR_IMAGE_STORAGE_PATH}/${filename}`
 }
 
+const getLogoPath = (filename) => {
+    return `${TEMP_LOGO_IMAGE_STORAGE_PATH}/${filename}`
+}
+
 const getImageHttpPath = (filename) => {
     return `${IMAGE_SERVE_DOMAIN}${IMAGE_SERVER_DIRECTORY}/${filename}`
 }
@@ -94,5 +98,6 @@ module.exports = {
     getImagePath,
     getImageHttpPath,
     deleteImage,
+    getLogoPath,
     dotRadiusArrayFromNabours
 }
