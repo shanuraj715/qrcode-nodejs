@@ -11,7 +11,6 @@ const circularDots = async (qrCodeArray, options) => {
     margin: 1,
     ...options
 }
-  console.log(defaultOptions)
   const oneRowMaxDots = qrCodeArray.length
   const dotSize = defaultOptions.width / (oneRowMaxDots + (defaultOptions.margin * 2));
   const qrCodeSize = qrCodeArray.length;
@@ -24,6 +23,8 @@ const circularDots = async (qrCodeArray, options) => {
 
   ctx.fillStyle = defaultOptions.secondaryColor;
   ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+  
 
   for (let i = 0; i < qrCodeSize; i++) {
         for (let j = 0; j < qrCodeSize; j++) {
