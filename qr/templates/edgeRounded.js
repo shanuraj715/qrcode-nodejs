@@ -1,6 +1,6 @@
 const { createCanvas } = require('canvas');
 const fs = require('fs');
-const {getImagePath, randomFileName, dotRadiusArrayFromNabours} = require('../../utils')
+const {getImagePath, randomFileName, dotRadiusArrayFromNabours, getFillColor} = require('../../utils')
 
 
 
@@ -28,8 +28,7 @@ const edgeRounded = async (qrCodeArray, options) => {
 
 	for (let i = 0; i < qrCodeSize; i++) {
 		for (let j = 0; j < qrCodeSize; j++) {
-			let dotColor = qrCodeArray[i][j] === 1 ? defaultOptions.primaryColor : defaultOptions.secondaryColor;
-			ctx.fillStyle = dotColor;
+			ctx.fillStyle = getFillColor(qrCodeArray, i, j, defaultOptions.primaryColor, defaultOptions.secondaryColor, defaultOptions.squareColor)
 			ctx.beginPath();
 			ctx.roundRect(margin + (i) * dotSize, margin + (j) * dotSize, dotSize, dotSize, dotRadiusArrayFromNabours(qrCodeArray, i, j, dotSize));
 			ctx.fill();

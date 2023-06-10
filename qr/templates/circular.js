@@ -11,6 +11,8 @@ const circularDots = async (qrCodeArray, options) => {
     margin: 1,
     ...options
 }
+// console.log("CIRCULAR", defaultOptions);
+
   const oneRowMaxDots = qrCodeArray.length
   const dotSize = defaultOptions.width / (oneRowMaxDots + (defaultOptions.margin * 2));
   const qrCodeSize = qrCodeArray.length;
@@ -28,8 +30,7 @@ const circularDots = async (qrCodeArray, options) => {
 
   for (let i = 0; i < qrCodeSize; i++) {
         for (let j = 0; j < qrCodeSize; j++) {
-          const dotColor = qrCodeArray[i][j] === 1 ? defaultOptions.primaryColor : defaultOptions.secondaryColor;
-          ctx.fillStyle = dotColor;
+          ctx.fillStyle =  utils.getFillColor(qrCodeArray, i, j, defaultOptions.primaryColor, defaultOptions.secondaryColor, defaultOptions.squareColor)
           ctx.beginPath();
           ctx.arc((j + 0.5) * dotSize + margin, (i + 0.5) * dotSize + margin, dotSize / 2, 0, Math.PI * 2);
           ctx.fill();
