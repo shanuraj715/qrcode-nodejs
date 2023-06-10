@@ -6,7 +6,6 @@ const addLogoToQr = (qrImage, logoImage, qrSize = DEFAULT_QR_SIZE, customSize) =
     let size = parseInt(qrSize / 6)
 
     if(customSize){
-        console.log(customSize)
         if(customSize > 20 && customSize < 300){
             if(customSize < parseInt(qrSize/4)){
                 size = parseInt(customSize)
@@ -28,7 +27,6 @@ const addLogoToQr = (qrImage, logoImage, qrSize = DEFAULT_QR_SIZE, customSize) =
         ])
         .toFile(fileToBeSave)
         .then(async () => {
-            console.log('Image composite successful.');
             await deleteImage(qrImage, true)
             await deleteImage(logoImage, true)
             resolve(fileToBeSave)

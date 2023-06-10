@@ -21,7 +21,6 @@ const defaultQR = async (req, res, filteredOptions) => {
         if(req.file){
             const filePath = req.file.path
             const squareLogo = await resize(filePath, filteredOptions.width, filteredOptions.logoSize)
-            await deleteImage(filePath, true)
             img = await addLogoToQr(img, squareLogo)
         }
         res.status(201).json(successResponse(201, {
@@ -29,6 +28,7 @@ const defaultQR = async (req, res, filteredOptions) => {
         }))
     }
     catch(err){
+        console.log(err)
         res.status(500).json(failResponse(500, ['Server is facing some issue.']))
     }
 }

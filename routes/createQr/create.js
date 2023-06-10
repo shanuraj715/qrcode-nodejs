@@ -36,6 +36,7 @@ router.post('/create/:type', handler, async (req, res) => {
     try{
         let img = await createQR(filteredOptions.data, {...filteredOptions, primaryColor: '#000000', secondaryColor: '#ffffff'}, false)
         const array = await qrToArray(img, 2)
+        // console.log(array)
         // await utils.deleteImage(img, true)
         let filePath = ''
         switch(type){

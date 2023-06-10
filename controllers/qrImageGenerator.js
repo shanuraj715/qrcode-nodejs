@@ -18,9 +18,11 @@ const createQrImage = async (data = 'No Data', options = {}, isDefault = false) 
     const {errorCorrectionLevel, scale, margin, width } = defaultOptions
     const colors = {dark: defaultOptions.primaryColor, light: defaultOptions.secondaryColor}
 
+    const computedMargin = isDefault ? margin : 0
+
     return await new Promise((resolve, reject) => {
         const image = utils.getImagePath(utils.randomFileName('png'))
-        qr.toFile(image, data, qrOption(errorCorrectionLevel, scale, margin, width, colors, isDefault), err => {
+        qr.toFile(image, data, qrOption(errorCorrectionLevel, scale, computedMargin, width, colors, isDefault), err => {
             if(err){
                 reject(err)
                 return

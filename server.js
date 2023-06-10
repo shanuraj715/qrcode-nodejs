@@ -17,7 +17,7 @@ const test = require('./test')
 
 app.use(createQrRoute)
 
-test()
+// test()
 
 
 global.serverListner = app.listen(8000, () => {
